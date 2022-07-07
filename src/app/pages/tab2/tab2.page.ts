@@ -70,16 +70,34 @@ export class Tab2Page {
       sourceType: this.camera.PictureSourceType.CAMERA
     }
     
+    this.procesarImagen(options);
+  }
+
+  libreria(){
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+    }
+
+    this.procesarImagen(options);
+  }
+
+  procesarImagen(options: CameraOptions){
     this.camera.getPicture(options).then((imageData) => {
-     // imageData is either a base64 encoded string or a file URI
-     // If it's base64 (DATA_URL):
-     // let base64Image = 'data:image/jpeg;base64,' + imageData;
-     const img = window.Ionic.WebView.convertFileSrc(imageData);
-     console.log(img);
-     this.tempImages.push(img);
-    }, (err) => {
-     // Handle error
-    });
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+      // let base64Image = 'data:image/jpeg;base64,' + imageData;
+      const img = window.Ionic.WebView.convertFileSrc(imageData);
+      console.log(img);
+      this.tempImages.push(img);
+     }, (err) => {
+      // Handle error
+      console.log('UN ERROR AL OBTENER LA FOTO');
+     });
   }
 
 }
